@@ -73,8 +73,9 @@ if __name__ == "__main__":
     print("{} -> {}: distance = {}, path = {}".format(city_from, city_to, d, path))
 
     print("--- From What Point To All Destinations ---")
-    ds, prev = dijkstra(g, "A")
+    city_from = str(input().strip())
+    ds, prev = dijkstra(g, city_from)
     for k in ds:
         path = find_path(prev, k)
-        print("A -> {}: distance = {}, path = {}".format(k, ds[k], path))
-    
+        print("{} -> {}: distance = {}, path = {}".format(city_from,k, ds[k], path))
+
