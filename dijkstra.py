@@ -53,36 +53,28 @@ def find_path(pr, node):  # generate path list based on parent points 'prev'
 
 
 if __name__ == "__main__":
-    edges = [
-        ("A", "B", 7),
-        ("A", "D", 5),
-        ("B", "C", 8),
-        ("B", "D", 9),
-        ("B", "E", 7),
-        ("C", "E", 5),
-        ("D", "E", 15),
-        ("D", "F", 6),
-        ("E", "F", 8),
-        ("E", "G", 9),
-        ("F", "G", 11)
-    ]
+
+    edges = []
+    with open("routes.txt") as fhandle:
+        for line in fhandle:
+            edge_from, edge_to, cost = line.strip().split(" ")
+            edges.append((edge_from, edge_to, int(cost)))
+    print(edges)
 
     g = build_graph(edges)
 
-    print("=== Dijkstra ===")
+    print("=== Shortest Path ===")
 
-    print("--- Single source, single destination ---")
-    d, prev = dijkstra(g, "A", "E")
-    path = find_path(prev, "E")
-    print("A -> E: distance = {}, path = {}".format(d, path))
+    print("--- From What City  To What City ---")
+    city_from, city_to = map(str, input().strip().split())
 
-    d, prev = dijkstra(g, "F", "G")
-    path = find_path(prev, "G")
-    print("F -> G: distance = {}, path = {}".format(d, path))
+    d, prev = dijkstra(g, city_from, city_to)
+    path = find_path(prev, city_to)
+    print("{} -> {}: distance = {}, path = {}".format(city_from, city_to, d, path))
 
-    print("--- Single source, all destinations ---")
+    print("--- From What Point To All Destinations ---")
     ds, prev = dijkstra(g, "A")
     for k in ds:
         path = find_path(prev, k)
         print("A -> {}: distance = {}, path = {}".format(k, ds[k], path))
-
+    
