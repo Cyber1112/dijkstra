@@ -5,7 +5,13 @@ class Graph:
     def __init__(self, edge_list):
         self.graph = defaultdict(list)
         self.edge_list = edge_list
+        self.nodes = []
 
+    def show_cities(self):
+        for n in self.graph:
+            self.nodes.append(n)
+        return self.nodes
+    
     def build_graph(self):
         seen_edges = defaultdict(int)
         for src, dst, weight in self.edge_list:
@@ -17,15 +23,12 @@ class Graph:
         return self.graph
 
     def dijkstra(self, src, dst=None):
-        nodes = []
-        for n in self.graph:
-            nodes.append(n)
 
-        q = set(nodes)
-        nodes = list(q)
+        q = set(self.nodes)
+        self.nodes = list(q)
         dist = dict()   # distance to start
         prev = dict()   # previous node in shortest path
-        for n in nodes:
+        for n in self.nodes:
             dist[n] = float('inf')
             prev[n] = None
 
@@ -66,6 +69,11 @@ if __name__ == "__main__":
     g = graph.build_graph()
 
     print("=== Shortest Path ===")
+
+    print("--- All Cities ---")
+    cities = graph.show_cities()
+    for i in range(len(cities) - 1):
+        print("{}. {}".format(i + 1, cities[i]))
 
     print("--- From What City  To What City ---")
     city_from, city_to = map(str, input().strip().split())
