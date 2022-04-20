@@ -80,8 +80,12 @@ if __name__ == "__main__":
     
     if city_from in g and city_to in g:
         d, prev = graph.dijkstra(city_from, city_to)
-        path = graph.find_path(prev, city_to)
-        print("{} -> {}: distance = {}, path = {}".format(city_from, city_to, d, path))
+        if d == float('inf'):
+            print("There is no possible routes from {} -> {}".format(city_from, city_to))
+        else:
+            path = graph.find_path(prev, city_to)
+            print("{} -> {}: distance = {}, path = {}".format(city_from, city_to, d, path))
+
     else:
         print("{} or {} is not in Kazakhtan".format(city_from, city_to))
 
