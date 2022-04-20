@@ -55,6 +55,30 @@ class Graph:
             p.append(node)
             node = pr[node]
         return p[::-1]
+    
+    def price(self, d):
+        if d <= 500:
+            return 50000
+        if d > 500 and d <= 1000:
+            return 100000
+        if d > 1000 and d <= 1500:
+            return 150000
+        if d > 1500 and d <= 2000:
+            return 200000
+        else:
+            return 300000
+    
+    def priceByDay(self, day, cost):
+        d = {
+            "Monday" : cost * 1.1,
+            "Tuesday" : cost * 1.1,
+            "Wednesday" : cost * 1.1,
+            "Thursday" : cost * 1.2,
+            "Friday" : cost * 1.3,
+            "Saturday" : cost * 1.8,
+            "Sunday" : cost * 2.0,
+        }
+        return d[day]
 
 if __name__ == "__main__":
 
@@ -84,7 +108,10 @@ if __name__ == "__main__":
             print("There is no possible routes from {} -> {}".format(city_from, city_to))
         else:
             path = graph.find_path(prev, city_to)
+            cost = graph.price(d)
             print("{} -> {}: distance = {}, path = {}".format(city_from, city_to, d, path))
+            day = str(input("The day you would like to go: "))
+            print("The cost to your destination: " + str(graph.priceByDay(day, cost)))
 
     else:
         print("{} or {} is not in Kazakhtan".format(city_from, city_to))
